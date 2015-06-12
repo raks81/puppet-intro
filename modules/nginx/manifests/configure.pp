@@ -7,16 +7,16 @@ class nginx::configure {
 		ensure => directory,
 	}
 
-	file { '/var/www/cinema':
+	file { "/var/www/$site_name":
 		ensure => directory,
 	}
 
-	file { '/etc/nginx/conf.d/default.conf':
-		source => 'puppet:///modules/nginx/cinema.conf',
+	file { "/etc/nginx/conf.d/default.conf":
+		content => template("nginx/vhost.conf.erb"),
 		notify => Service['nginx'],
 	}
 
-	file { '/var/www/cinema/index.html':
-		source => 'puppet:///modules/nginx/index.html',
+	file { "/var/www/${site_name}/index.html":
+		content => template("nginx/index.html.erb"),
 	}
 }
