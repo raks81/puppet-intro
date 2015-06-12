@@ -5,6 +5,10 @@ node 'demo' {
 	include nginx
 	include haproxy
 
+	class {  'ntp':
+		server => 'us.pool.ntp.org',
+	}
+
 	nginx::vhost { 'hollywood' : 
 		port => 81,
 		site_domain => 'hollywood.com'
@@ -19,4 +23,6 @@ node 'demo' {
 		port => 83,
 		site_domain => 'tollywood.com'
 	}
+
+	
 }
