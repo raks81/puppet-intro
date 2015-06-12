@@ -1,0 +1,25 @@
+node 'demo' {
+	file { 'bollywood' :
+		path    => '/tmp/bollywood',
+		ensure  => present,
+		mode    => 0640,
+		content => "some text",	
+	}
+
+	file { 'tollywood' :
+		path    => '/tmp/tollywood',
+		ensure  => present,
+		mode    => 644,
+		content => "some tollywood",
+		owner   => "root",
+		group   => "root",	
+	}
+
+	user { 'amitabh':
+	  ensure  => absent,
+	}
+
+	user { 'rajnikanth':
+	  ensure  => absent,
+	}
+}
