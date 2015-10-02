@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define :master do |master|
+    master.vm.hostname = "master"
+    master.vm.network :private_network, ip: "192.168.5.10"
+    master.vm.provision "shell", inline: $script
+  end
+
+  config.vm.define :agent do |agent|
+    agent.vm.hostname = "agent"
+    agent.vm.network :private_network, ip: "192.168.5.11"
+    agent.vm.provision "shell", inline: $script
+  end
+
+  config.vm.box = "puppet"
+
+$script = <<SCRIPT
+cat >> /etc/hosts  << END
+192.168.5.10 master.example.com master puppet
+192.168.5.11 agent.example.com agent
+END
+SCRIPT
+
+end
